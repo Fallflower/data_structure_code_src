@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# .vscode config files
+*.json
+
+# backups
+*.backup*
