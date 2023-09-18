@@ -1,6 +1,6 @@
 #ifndef __CIRCULAR_QUEUE_H__
 #define __CIRCULAR_QUEUE_H__
-
+#include<stdlib.h>
 
 #define MAXSIZE 50
 
