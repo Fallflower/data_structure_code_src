@@ -76,7 +76,21 @@ public:
         BSTreeNode<E> * p = Search(e), pp;
         pp = parent(p);
         if (p->lchild == NULL && p->rchild == NULL)
+        {
+            if (pp->lchild == p) pp->lchild = NULL;
+            else if (pp->rchild == p) pp->rchild = NULL;
+            else root = NULL;
+            delete p;
+        } 
+        else if (p->lchild == NULL) { // 找右子树中最左下的来替代
 
+        }
+        else if (p->rchild == NULL) { // 找左子树中最右下的来替代
+
+        }
+        else { // 找中序前驱或后继
+
+        }
     }
 
     BSTreeNode<E> *Search(E key) {
