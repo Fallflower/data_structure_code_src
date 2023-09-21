@@ -28,27 +28,27 @@ public:
     /*
     所有非终端节点：编号 i <= floor(n / 2)
     */
-    MaxHeap():length(0), data(NULL) {}
-    MaxHeap(E A[], const int& n) {
+    MaxHeap(): data(NULL), length(0) {}
+    MaxHeap(const E A[], const int& n) {
         makeHeap(A, n);
     }
 
-    void makeHeap(E A[], const int& len) {
-        delete[] data;
+    void makeHeap(const E A[], const int& len) {
+        if (data != NULL) delete[] data;
 
         length = len;
-        data = new E[length + 1]{0};
-        for (int i = 0; i <= length; i++)
+        data = new E[length + 1];
+        for (int i = 0; i < length; i++)
             data[i+1] = A[i];
         for (int i = length/2; i > 0; i--) // 调整所有非终端结点
             adjustHeap(i);
         
-
-        Display(data, length);
+        // TestHeap
+        Display(data, length+1);
     }
 
     ~MaxHeap() {
-        delete[] data;
+        if (data != NULL) delete[] data;
     }
 };
 
