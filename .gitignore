@@ -34,5 +34,6 @@
 # .vscode config files
 *.json
 
+*.dSYM
 # backups
 *.backup*
