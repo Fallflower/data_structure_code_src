@@ -30,7 +30,7 @@ private:
         while (hi > 1 && data[pi] < e)
         {
             data[hi] = data[pi];
-            hi = [pi];
+            hi = pi;
             pi /= 2;
         }
         data[hi] = e;
@@ -60,9 +60,10 @@ public:
         if (length == MAX_SIZE) throw Error("Heap array OVERFLOW!");
         percolateUp(++length, e);
     }
+
+    void display(void Visit(const E&)) const {
+        for (int i = 1; i <= length; i++)
+            Visit(data[i]);
+    }
 };
-
-
-
-
 #endif
