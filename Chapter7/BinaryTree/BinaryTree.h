@@ -2,9 +2,6 @@
 #define __BINARY_TREE__
 
 #include "BinaryTreeNode.h"
-#include<string>
-#include<iostream>
-using namespace std;
 
 template<class Etype>
 class BinaryTree
@@ -82,7 +79,7 @@ public:
         else if (mode == "post")
             root = init_with_in_post(in, 0, n-1, pre, 0, n-1);
         else
-            cerr << "Unrecognized mode " << mode << endl;
+            throw Error(404, string("Unrecognized mode: ")+mode);
     }
 
     ~BinaryTree() {

@@ -12,15 +12,22 @@ int main()
     char PostOrder[] = {'B', 'A', 'E', 'D', 'C'};
     int n = 5;
 
-    BinaryTree<char> T1(InOrder, PreOrder, n, "pre");
+    try
+    {
+        BinaryTree<char> T1(InOrder, PreOrder, n, "pre");
 
-    T1.PostOrderShow(Visit);
+        T1.PostOrderShow(Visit);
 
-    cout << endl;
-    
-    BinaryTree<char> T2(InOrder, PostOrder, n, "post");
+        cout << endl;
+        
+        BinaryTree<char> T2(InOrder, PostOrder, n, "fuck");
 
-    T2.PreOrderShow(Visit);
+        T2.PreOrderShow(Visit);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 
     return 0;
 }
