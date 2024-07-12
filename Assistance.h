@@ -16,6 +16,8 @@
 #include <iomanip>					// 输入输出流格式设置	
 #include <cstdarg> 					// 支持变长函数参数	
 #include <cassert>					// 支持断言
+#include <string>
+#include <string.h>
 using namespace std;				// 标准库包含在命名空间std中
 
 // 自定义类型
@@ -56,33 +58,21 @@ char GetChar(istream &inStream)
 	return ch;								// 返回字符
 }
 
-// 通用异常类                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-#define MAX_ERROR_MESSAGE_LEN 100
-class Error
+class Error : public std::exception
 {
 private:
-// 数据成员
-	char message[MAX_ERROR_MESSAGE_LEN];// 异常信息
-
+	unsigned int m_code;
+	string m_what;
 public:
-//  方法声明
-	Error(const char *mes = "一般性异常!");	// 构造函数 
-	~Error(void) {};					// 析构函数	
-	void Show() const;					// 显示异常信息
+	Error(unsigned int code,  const string &what_arg): m_code(code), m_what(what_arg){}
+	virtual const char * what(void) const noexcept override
+	{
+		string text = "Error code: " + to_string(m_code) + "\nError message: " + m_what;
+		char* mesg = new char[text.length()+1];
+		strcpy(mesg, text.c_str());
+		return mesg;
+	}
 };
-
-// 通用异常类的实现部分
-Error::Error(const char *mes)
-// 操作结果：由mes构构通用异常对象
-{
-	strcpy(message, mes);				// 复制异常信息
-}
-
-void Error::Show()const
-// 操作结果：显示异常信息
-{
-	cout << message << endl;			// 显示异常信息	
-}
 
 
 template <class ElemType >

@@ -1,6 +1,6 @@
 #ifndef __BINARY_TREE_NODE__
 #define __BINARY_TREE_NODE__
-#include "../../../Cpp_Assistance/Assistance.h"
+#include "../../Assistance.h"
 
 template<class Etype>
 struct BinaryTreeNode
