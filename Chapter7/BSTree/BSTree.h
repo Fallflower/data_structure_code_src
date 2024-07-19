@@ -2,13 +2,34 @@
 #define __BINARY_SEARCH_TREE__
 #include "BSTreeNode.h"
 #include "../../Chapter3/CirQueue/CirQueue.h"
+#include "../BinaryTree/BinaryTree.h"
+
 
 template<typename E>
-class BSTree
+class BSTree : public BinaryTree
 {
 private:
     BSTreeNode<E> *root;
 
+    BSTreeNode<E>* __get_most_left_in_rtree(BSTreeNode<E>* r) {
+        if (r->rchild == nullptr) return nullptr;
+        BSTreeNode<E>* p = r->rchild;
+        while (p->lchild != nullptr)
+        {
+            p = p->lchild;
+        }
+        return p; 
+    }
+    
+    BSTreeNode<E>* __get_most_right_in_ltree(BSTreeNode<E>* r) {
+        if (r->lchild == nullptr) return nullptr;
+        BSTreeNode<E>* p = r->lchild;
+        while (p->rchild != nullptr)
+        {
+            p = p->rchild;
+        }
+        return p; 
+    }
 
     void InOrderVisit(BSTreeNode<E> *r, void Visit(const E& e)) {
         if (r != NULL) {
@@ -97,8 +118,7 @@ public:
     }
 
     void InOrderVisit(void Visit(const E& e)) {
-        if (root != NULL)
-            InOrderVisit(root, Visit);
+        InOrderVisit(root, Visit);
     }
 };
 
