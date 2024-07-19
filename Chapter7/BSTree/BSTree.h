@@ -1,14 +1,7 @@
-#ifndef __BINARY_SEARCH_TREE_H__
-#define __BINARY_SEARCH_TREE_H__
-// #include<stdlib.h>
+#ifndef __BINARY_SEARCH_TREE__
+#define __BINARY_SEARCH_TREE__
+#include "BSTreeNode.h"
 #include "../../Chapter3/CirQueue/CirQueue.h"
-
-template<typename E>
-struct BSTreeNode
-{
-    E data;
-    BSTreeNode *lchild, *rchild;
-};
 
 template<typename E>
 class BSTree
