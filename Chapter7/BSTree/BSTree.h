@@ -68,7 +68,7 @@ protected:
             else pp->lchild = p->lchild;
             delete p;
         } else { // 找中序前驱或后继
-            TreeNode<E> *q = __get_most_left_in_rtree(p->rchild);
+            TreeNode<E> *q = __get_most_left_in_rtree(p);
             E e = q->elem;
             Delete(q);
             p->elem = e;

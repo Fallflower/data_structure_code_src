@@ -14,6 +14,8 @@ int main()
         t.InOrderShow(Visit);
         t.Delete(1);
         t.InOrderShow(Visit);
+        t.Delete(3);
+        t.InOrderShow(Visit);
     } catch (const exception& e) {
         cerr << e.what() << endl;
     }
