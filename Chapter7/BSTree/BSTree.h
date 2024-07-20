@@ -47,13 +47,14 @@ private:
 public:
     BSTree(E *arr, int length) {
         int i = 0;
-        while (i < length && Insert(Tree<E>::root, arr[i]))
+        while (i < length) {
+            if (!Insert(Tree<E>::root, arr[i])) 
+                throw Error(100, "Duplicated element in array");
             i++;
-        
+        } 
     }
 
     bool Insert(TreeNode<E> * &p, const E& e) override {
-        throw Error(123, "FUCK");
         if (p == nullptr) {
             p = new TreeNode<E>{e, nullptr, nullptr};
             return 1;

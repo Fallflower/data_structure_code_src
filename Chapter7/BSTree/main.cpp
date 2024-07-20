@@ -9,10 +9,11 @@ int main()
 {
     try {
         char arr[] = {'A', 'B', 'C', 'D', 'E'};
-        BSTree<char> t(arr, 5);
+        BSTree<char> t(arr, 6);
         t.InOrderShow(Visit);
     } catch (const exception& e) {
         cerr << e.what() << endl;
     }
+    cout << endl;
     return 0;
 }
