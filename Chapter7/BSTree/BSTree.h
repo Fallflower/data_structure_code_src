@@ -1,19 +1,18 @@
 #ifndef __BINARY_SEARCH_TREE__
 #define __BINARY_SEARCH_TREE__
-#include "BSTreeNode.h"
+// #include "TreeNode.h"
 #include "../../Chapter3/CirQueue/CirQueue.h"
-#include "../BinaryTree/BinaryTree.h"
+#include "Tree.h"
 
 
 template<typename E>
-class BSTree : public BinaryTree<E>
+class BSTree : public Tree<E>
 {
 private:
-    BSTreeNode<E> *root;
 
-    BSTreeNode<E>* __get_most_left_in_rtree(BSTreeNode<E>* r) {
+    TreeNode<E>* __get_most_left_in_rtree(TreeNode<E>* r) {
         if (r->rchild == nullptr) return nullptr;
-        BSTreeNode<E>* p = r->rchild;
+        TreeNode<E>* p = r->rchild;
         while (p->lchild != nullptr)
         {
             p = p->lchild;
@@ -21,9 +20,9 @@ private:
         return p; 
     }
     
-    BSTreeNode<E>* __get_most_right_in_ltree(BSTreeNode<E>* r) {
+    TreeNode<E>* __get_most_right_in_ltree(TreeNode<E>* r) {
         if (r->lchild == nullptr) return nullptr;
-        BSTreeNode<E>* p = r->lchild;
+        TreeNode<E>* p = r->lchild;
         while (p->rchild != nullptr)
         {
             p = p->rchild;
@@ -31,28 +30,12 @@ private:
         return p; 
     }
 
-    // void InOrderVisit(BSTreeNode<E> *r, void Visit(const E& e)) {
-        // if (r != NULL) {
-            // InOrderVisit(r->lchild, Visit);
-            // Visit(r->data);
-            // InOrderVisit(r->rchild, Visit);
-        // }
-    // }
-// 
-    // void Destroy(BSTreeNode<E> *r) {
-        // if (r != NULL) {
-            // Destroy(r->lchild);
-            // Destroy(r->rchild);
-            // delete r;
-        // }
-    // }
-// 
-    BSTreeNode<E> * parent(BSTreeNode<E> *p) {
-        CirQueue<BSTreeNode<E>*> queue;
-        queue.EnCirQueue(root);
+    TreeNode<E> * parent(TreeNode<E> *p) {
+        CirQueue<TreeNode<E>*> queue;
+        queue.EnCirQueue(Tree<E>::root);
         while (!queue.isEmpty())
         {
-            BSTreeNode<E> *q;
+            TreeNode<E> *q;
             queue.DeCirQueue(q);
             if (q->lchild == p || q->rchild == p) return q;
             queue.EnCirQueue(q->lchild);
@@ -62,38 +45,34 @@ private:
     }
 
 public:
-    BSTree(E str[], int length) {
-        T = NULL;
+    BSTree(E *arr, int length) {
         int i = 0;
-        while (i < length && Insert(root, str[i]))
+        while (i < length && Insert(Tree<E>::root, arr[i]))
             i++;
         
     }
-    // ~BSTree() {
-        // Destroy(root);
-    // }
 
-    bool Insert(BSTreeNode<E> *p, const E& e) {
+    bool Insert(TreeNode<E> * &p, const E& e) override {
         if (p == NULL) {
-            p = new BSTreeNode<E>{e, NULL, NULL};
+            p = new TreeNode<E>{e, NULL, NULL};
             return 1;
         }
-        else if (e == p->data)
+        else if (e == p->elem)
             return 0;
-        else if (e < p->data)
+        else if (e < p->elem)
             return Insert(p->lchild, e);
         else
             return Insert(p->rchild, e);
     }
 
     bool Delete(const E& e) {
-        BSTreeNode<E> * p = Search(e), pp;
+        TreeNode<E> * p = Search(e), pp;
         pp = parent(p);
         if (p->lchild == NULL && p->rchild == NULL)
         {
             if (pp->lchild == p) pp->lchild = NULL;
             else if (pp->rchild == p) pp->rchild = NULL;
-            else root = NULL;
+            else Tree<E>::root = NULL;
             delete p;
         } 
         else if (p->lchild == NULL) { // 找右子树中最左下的来替代
@@ -107,19 +86,15 @@ public:
         }
     }
 
-    BSTreeNode<E> *Search(E key) {
-        BSTreeNode<E> *T = root;
-        while (T != NULL && key != T->data)
+    TreeNode<E> *Search(E key) {
+        TreeNode<E> *T = Tree<E>::root;
+        while (T != NULL && key != T->elem)
         {
-            if (key < T->data) T = T->lchild;
+            if (key < T->elem) T = T->lchild;
             else T = T->rchild;
         }
         return T;
     }
-
-    // void InOrderVisit(void Visit(const E& e)) {
-        // InOrderVisit(root, Visit);
-    // }
 };
 
 #endif

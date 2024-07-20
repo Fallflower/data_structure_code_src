@@ -8,8 +8,9 @@ void Visit(const char& c) {
 int main()
 {
     char arr[] = {'A', 'B', 'C', 'D' ,'E'};
-    BSTree t(arr, 5);
+    BSTree<char> t(arr, 5);
 
     t.InOrderShow(Visit);
+    // cout << t.root->getElem() << endl;
     return 0;
 }
