@@ -12,26 +12,21 @@ private:
     bool tag;
 
 public:
-    CirQueue() {
-        front = rear = 0;
-        tag = 0;
-    }
+    CirQueue() : front(0), rear(0), tag(false) {}
 
     bool isEmpty() const {
-        if (tag) return false;
-        if (front == rear) return true;
+        return (front == rear) && !tag;
     }
 
     bool isFull() const {
-        if (!tag) return false;
-        if (front == rear) return true;
+        return (front == rear) && tag;
     }
 
     bool EnCirQueue(const E& e) {
         if (isFull()) return false;
         data[rear] = e;
         rear = (rear + 1) % MAXSIZE;
-        tag = 1;
+        if (rear == front) tag = 1;
         return true;
     }
 
@@ -39,7 +34,7 @@ public:
         if (isEmpty()) return false;
         e = data[front];
         front = (front + 1) % MAXSIZE;
-        tag = 0;
+        if (rear == front) tag = 0;
         return true;
     }
 

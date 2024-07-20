@@ -6,7 +6,9 @@
 template<class Etype>
 class Tree
 {
-private:
+protected:
+    TreeNode<Etype> *root;
+
     void Destroy(TreeNode<Etype> *& p) {
         if (p == nullptr) return;
         Destroy(p->lchild);
@@ -68,9 +70,6 @@ private:
         PostOrderVisit(p->rchild, Visit);
         Visit(p->elem);
     }
-
-protected:
-    TreeNode<Etype> *root;
 
 public:
     Tree() :root(nullptr) {}

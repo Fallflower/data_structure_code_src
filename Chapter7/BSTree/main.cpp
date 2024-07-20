@@ -1,15 +1,18 @@
 #include "BSTree.h"
 using namespace std;
 
-void Visit(const char& c) {
+template<class ElemType>
+void Visit(const ElemType& c) {
     cout << c;
 }
 
 int main()
 {
     try {
-        char arr[] = {'A', 'B', 'C', 'D', 'E'};
-        BSTree<char> t(arr, 6);
+        int arr[] = {3, 1, 2, 4, 5};
+        BSTree<int> t(arr, 5);
+        t.InOrderShow(Visit);
+        t.Delete(1);
         t.InOrderShow(Visit);
     } catch (const exception& e) {
         cerr << e.what() << endl;
