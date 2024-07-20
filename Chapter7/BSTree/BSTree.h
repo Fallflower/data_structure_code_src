@@ -41,7 +41,7 @@ private:
             queue.EnCirQueue(q->lchild);
             queue.EnCirQueue(q->rchild);
         }
-        return NULL;
+        return nullptr;
     }
 
 public:
@@ -53,8 +53,8 @@ public:
     }
 
     bool Insert(TreeNode<E> * &p, const E& e) override {
-        if (p == NULL) {
-            p = new TreeNode<E>{e, NULL, NULL};
+        if (p == nullptr) {
+            p = new TreeNode<E>{e, nullptr, nullptr};
             return 1;
         }
         else if (e == p->elem)
@@ -68,17 +68,17 @@ public:
     bool Delete(const E& e) {
         TreeNode<E> * p = Search(e), pp;
         pp = parent(p);
-        if (p->lchild == NULL && p->rchild == NULL)
+        if (p->lchild == nullptr && p->rchild == nullptr)
         {
-            if (pp->lchild == p) pp->lchild = NULL;
-            else if (pp->rchild == p) pp->rchild = NULL;
-            else Tree<E>::root = NULL;
+            if (pp->lchild == p) pp->lchild = nullptr;
+            else if (pp->rchild == p) pp->rchild = nullptr;
+            else Tree<E>::root = nullptr;
             delete p;
         } 
-        else if (p->lchild == NULL) { // 找右子树中最左下的来替代
+        else if (p->lchild == nullptr) { // 找右子树中最左下的来替代
 
         }
-        else if (p->rchild == NULL) { // 找左子树中最右下的来替代
+        else if (p->rchild == nullptr) { // 找左子树中最右下的来替代
 
         }
         else { // 找中序前驱或后继
@@ -88,7 +88,7 @@ public:
 
     TreeNode<E> *Search(E key) {
         TreeNode<E> *T = Tree<E>::root;
-        while (T != NULL && key != T->elem)
+        while (T != nullptr && key != T->elem)
         {
             if (key < T->elem) T = T->lchild;
             else T = T->rchild;

@@ -2,7 +2,7 @@
 using namespace std;
 
 void Visit(const char& c) {
-    printf("%c", c);
+    cout << c;
 }
 
 int main()
@@ -11,6 +11,6 @@ int main()
     BSTree<char> t(arr, 5);
 
     t.InOrderShow(Visit);
-    // cout << t.root->getElem() << endl;
+    cout << t.root->getElem() << endl;
     return 0;
 }
