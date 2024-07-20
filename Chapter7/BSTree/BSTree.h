@@ -53,6 +53,7 @@ public:
     }
 
     bool Insert(TreeNode<E> * &p, const E& e) override {
+        throw Error(123, "FUCK");
         if (p == nullptr) {
             p = new TreeNode<E>{e, nullptr, nullptr};
             return 1;

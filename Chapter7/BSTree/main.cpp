@@ -7,10 +7,12 @@ void Visit(const char& c) {
 
 int main()
 {
-    char arr[] = {'A', 'B', 'C', 'D' ,'E'};
-    BSTree<char> t(arr, 5);
-
-    t.InOrderShow(Visit);
-    cout << t.root->getElem() << endl;
+    try {
+        char arr[] = {'A', 'B', 'C', 'D', 'E'};
+        BSTree<char> t(arr, 5);
+        t.InOrderShow(Visit);
+    } catch (const exception& e) {
+        cerr << e.what() << endl;
+    }
     return 0;
 }

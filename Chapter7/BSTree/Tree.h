@@ -69,8 +69,10 @@ private:
         Visit(p->elem);
     }
 
-public:
+protected:
     TreeNode<Etype> *root;
+
+public:
     Tree() :root(nullptr) {}
     Tree(Etype in[], Etype pre[], int n, string mode) {
         if (mode == "pre")
