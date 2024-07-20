@@ -6,7 +6,7 @@
 
 
 template<typename E>
-class BSTree : public BinaryTree
+class BSTree : public BinaryTree<E>
 {
 private:
     BSTreeNode<E> *root;
@@ -31,22 +31,22 @@ private:
         return p; 
     }
 
-    void InOrderVisit(BSTreeNode<E> *r, void Visit(const E& e)) {
-        if (r != NULL) {
-            InOrderVisit(r->lchild, Visit);
-            Visit(r->data);
-            InOrderVisit(r->rchild, Visit);
-        }
-    }
-
-    void Destroy(BSTreeNode<E> *r) {
-        if (r != NULL) {
-            Destroy(r->lchild);
-            Destroy(r->rchild);
-            delete r;
-        }
-    }
-
+    // void InOrderVisit(BSTreeNode<E> *r, void Visit(const E& e)) {
+        // if (r != NULL) {
+            // InOrderVisit(r->lchild, Visit);
+            // Visit(r->data);
+            // InOrderVisit(r->rchild, Visit);
+        // }
+    // }
+// 
+    // void Destroy(BSTreeNode<E> *r) {
+        // if (r != NULL) {
+            // Destroy(r->lchild);
+            // Destroy(r->rchild);
+            // delete r;
+        // }
+    // }
+// 
     BSTreeNode<E> * parent(BSTreeNode<E> *p) {
         CirQueue<BSTreeNode<E>*> queue;
         queue.EnCirQueue(root);
@@ -69,9 +69,9 @@ public:
             i++;
         
     }
-    ~BSTree() {
-        Destroy(root);
-    }
+    // ~BSTree() {
+        // Destroy(root);
+    // }
 
     bool Insert(BSTreeNode<E> *p, const E& e) {
         if (p == NULL) {
@@ -117,9 +117,9 @@ public:
         return T;
     }
 
-    void InOrderVisit(void Visit(const E& e)) {
-        InOrderVisit(root, Visit);
-    }
+    // void InOrderVisit(void Visit(const E& e)) {
+        // InOrderVisit(root, Visit);
+    // }
 };
 
 #endif

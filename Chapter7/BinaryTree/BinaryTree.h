@@ -82,11 +82,11 @@ public:
             throw Error(404, string("Unrecognized mode: ")+mode);
     }
 
-    ~BinaryTree() {
+    virtual ~BinaryTree() {
         Destroy(root);
     }
 
-    void InOrderShow(void Visit(const Etype& e)) const {
+    virtual InOrderShow(void Visit(const Etype& e)) const {
         InOrderVisit(root, Visit);
     }
 
