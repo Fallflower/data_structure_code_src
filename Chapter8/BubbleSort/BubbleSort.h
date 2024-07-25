@@ -6,7 +6,7 @@ template<class Etype>
 class BubbleSort : public Solution<Etype>
 {
 public:
-    void solute(Etype arr[], int n) {
+    void solve(Etype arr[], int n) {
         for (int i = 0; i < n; i++)
             for (int j = 1; j < n - i; j++)
                 if (arr[j-1] > arr[j])

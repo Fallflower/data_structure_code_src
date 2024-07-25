@@ -7,6 +7,6 @@ class Solution {
 public:
     Solution() {}
 
-    virtual void solute(Etype arr[], int n) = 0;
+    virtual void solve(Etype arr[], int n) = 0;
 };
 #endif
