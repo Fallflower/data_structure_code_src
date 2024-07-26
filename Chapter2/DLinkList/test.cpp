@@ -5,12 +5,15 @@ using namespace std;
 int main()
 {
     DLinkList<int> l;
-    cout << l<< endl;
-
+    int arr[10] = {1,7,7,8,3,4,4,5,6,2};
+    l.Insert(arr, 10, 1);
+    cout << l << endl;
     l.Insert(1, 1);
-    l.Insert(0, 2);
-    l.Insert(2, 3);
-    cout << l<< endl;
+    cout << l << endl;
+    l.Insert(2, 0);
+    cout << l << endl;
+    l.Insert(3, 2);
+    cout << l << endl;
     l.DeleteByLoc(2);
     cout << l << endl;
     return 0;

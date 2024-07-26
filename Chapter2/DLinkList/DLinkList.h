@@ -8,6 +8,10 @@ template<class Elemtype>
 struct DNode{
     Elemtype data;
     DNode *prior, *next;
+
+    DNode() {}
+    DNode(const Elemtype& e) : data(e), prior(nullptr), next(nullptr) {}
+    DNode(const Elemtype& e, DNode<Elemtype> *p, DNode<Elemtype> *n) : data(e), prior(p), next(n) {}
 };
 
 template<class Elemtype>
@@ -52,16 +56,14 @@ public:
     ~DLinkList() {
         DNode<Elemtype> *p = head;
         for (; p != nullptr; p=p->next)
-        {
-            p = p->next;
-            delete (p->prior);
-        }
+            if (p->prior!=nullptr) delete (p->prior);
     }
 
     int getLength() const{
         return length;
     }
 
+    //将元素插入到第loc个位置（原来的元素顺势后移）
     bool Insert(const Elemtype& e, const int& loc) {
         if (loc < 1 || loc > length + 1)
             return false;
@@ -78,11 +80,24 @@ public:
             p = p->next;
             i++;
         }
-        if (p == nullptr)
-            return false;
-        s = new DNode<Elemtype>;
-        s->data = e;
+        s = new DNode<Elemtype>(e);
         return InsertNextNode(p, s);
+    }
+
+    bool Insert(const Elemtype arr[], const int& n, const int& loc) {
+        if (loc < 1 || loc > length + 1 || n < 1)
+            return false;
+        int flag = 0;
+        if (head == nullptr)
+        {
+            head = new DNode<Elemtype>{arr[0], nullptr, nullptr};
+            flag = 1;
+        }
+        DNode<Elemtype> *p = head;
+        for (int i = 1; i < loc - 1; i++)
+            p = p->next;
+        for (int i = flag; i < n && InsertNextNode(p, new DNode<Elemtype>(arr[i])); i++);
+        return 1;
     }
 
     DNode<Elemtype> * DeleteFirstElem(const Elemtype& e) {
@@ -93,19 +108,23 @@ public:
 
     }
 
-    DNode<Elemtype> * DeleteByLoc(const int& loc) {
+    bool DeleteByLoc(const int& loc) {
         if (loc < 1 || loc > length || head == nullptr)
-            return nullptr;
+            return 0;
         int i = 1;
-        DNode<Elemtype> *p = head;
+        DNode<Elemtype> *p = head, *s;
         while (i < loc - 1)
         {
             p = p->next;
             i++;
         }
         if (p == nullptr)
-            return nullptr;
-        return DeleteNextNode(p);
+            return 0;
+        s = DeleteNextNode(p);
+        if (s == nullptr)
+            return 0;
+        delete s;
+        return 1;
     }
 
     ostream& output(ostream& out) const {
