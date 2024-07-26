@@ -96,7 +96,7 @@ public:
         DNode<Elemtype> *p = head;
         for (int i = 1; i < loc - 1; i++)
             p = p->next;
-        for (int i = flag; i < n && InsertNextNode(p, new DNode<Elemtype>(arr[i])); i++);
+        for (int i = flag; i <= n && InsertNextNode(p, new DNode<Elemtype>(arr[i])); i++, p=p->next);
         return 1;
     }
 
@@ -104,8 +104,29 @@ public:
 
     }
 
-    DNode<Elemtype> * DeleteAllElem(const Elemtype& e) {
-
+    bool DeleteAllElem(const Elemtype& e) {
+        if (head == nullptr) return 0;
+        int flag = 0;
+        for (DNode<Elemtype>* p = head; p!= nullptr; )
+        {
+            if (p->next != nullptr)
+            {
+                if (p->next->data == e) {
+                    DNode<Elemtype>* s = DeleteNextNode(p);
+                    if (s != nullptr) {flag = 1; delete s;}
+                } else
+                    p=p->next;
+            } else break;
+        }
+        if (head->data == e) {
+            DNode<Elemtype> *p = head;
+            head = head->next;
+            head->prior = nullptr;
+            delete p;
+            length--;
+            flag = 1;
+        }
+        return flag;
     }
 
     bool DeleteByLoc(const int& loc) {
