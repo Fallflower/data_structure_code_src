@@ -100,7 +100,29 @@ public:
         return 1;
     }
 
-    DNode<Elemtype> * DeleteFirstElem(const Elemtype& e) {
+    bool DeleteFirstElem(const Elemtype& e) {
+        if (head == nullptr) return 0;
+        if (head->data == e) {
+            DNode<Elemtype> *p = head;
+            head = head->next;
+            head->prior = nullptr;
+            delete p;
+            length--;
+            return 1;
+        }
+        int flag = 0;
+        for (DNode<Elemtype>* p = head; p!= nullptr; )
+        {
+            if (p->next != nullptr)
+            {
+                if (p->next->data == e) {
+                    DNode<Elemtype>* s = DeleteNextNode(p);
+                    if (s != nullptr) {flag = 1; delete s; break;}
+                } else
+                    p=p->next;
+            } else break;
+        }
+        return flag;
 
     }
 

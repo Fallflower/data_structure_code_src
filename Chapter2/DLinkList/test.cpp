@@ -19,6 +19,8 @@ int main()
     cout << l << endl;
     l.DeleteAllElem(1);
     cout << l << endl;
+    l.DeleteFirstElem(4);
+    cout << l << endl;
     
     return 0;
 }
