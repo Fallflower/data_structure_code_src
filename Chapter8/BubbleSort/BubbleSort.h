@@ -1,6 +1,7 @@
 #include "../../Assistance.h"
 
-void BubbleSort(int a[], int n)
+template <class E>
+void BubbleSort(E a[], int n)
 {
     for (int i = 0; i < n - 1; i++)
     {
