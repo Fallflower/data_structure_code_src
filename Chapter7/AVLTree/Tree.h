@@ -1,24 +1,24 @@
 #ifndef __BINARY_TREE__
 #define __BINARY_TREE__
 
-#include "BinaryTreeNode.h"
+#include "TreeNode.h"
 
 template<class Etype>
-class BinaryTree
+class Tree
 {
-private:
-    BinaryTreeNode<Etype> *root;
+protected:
+    TreeNode<Etype> *root;
 
-    void Destroy(BinaryTreeNode<Etype> *& p) {
+    void Destroy(TreeNode<Etype> *& p) {
         if (p == nullptr) return;
         Destroy(p->lchild);
         Destroy(p->rchild);
         delete p;
     }
 
-    BinaryTreeNode<Etype>* init_with_in_post(Etype in[], int is, int ie, Etype post[], int ps, int pe) {
+    TreeNode<Etype>* init_with_in_post(Etype in[], int is, int ie, Etype post[], int ps, int pe) {
         if (ie < is) return nullptr;
-        BinaryTreeNode<Etype>* p = new BinaryTreeNode<Etype>;
+        TreeNode<Etype>* p = new TreeNode<Etype>;
         p->elem = post[pe];
         for (int i = is; i <= ie; i++)
         {
@@ -33,9 +33,9 @@ private:
         return p;
     }
 
-    BinaryTreeNode<Etype>* init_with_in_pre(Etype in[], int is, int ie, Etype pre[], int ps, int pe) {
+    TreeNode<Etype>* init_with_in_pre(Etype in[], int is, int ie, Etype pre[], int ps, int pe) {
         if (ie < is) return nullptr;
-        BinaryTreeNode<Etype>* p = new BinaryTreeNode<Etype>;
+        TreeNode<Etype>* p = new TreeNode<Etype>;
         p->elem = pre[ps];
         for (int i = is; i <= ie; i++)
         {
@@ -50,21 +50,21 @@ private:
         return p;
     }
 
-    void InOrderVisit(BinaryTreeNode<Etype> *p, void Visit(const Etype& e)) const {
+    void InOrderVisit(TreeNode<Etype> *p, void Visit(const Etype& e)) const {
         if (p == nullptr) return;
         InOrderVisit(p->lchild, Visit);
         Visit(p->elem);
         InOrderVisit(p->rchild, Visit);
     }
 
-    void PreOrderVisit(BinaryTreeNode<Etype> *p, void Visit(const Etype& e)) const {
+    void PreOrderVisit(TreeNode<Etype> *p, void Visit(const Etype& e)) const {
         if (p == nullptr) return;
         Visit(p->elem);
         PreOrderVisit(p->lchild, Visit);
         PreOrderVisit(p->rchild, Visit);
     }
 
-    void PostOrderVisit(BinaryTreeNode<Etype> *p, void Visit(const Etype& e)) const {
+    void PostOrderVisit(TreeNode<Etype> *p, void Visit(const Etype& e)) const {
         if (p == nullptr) return;
         PostOrderVisit(p->lchild, Visit);
         PostOrderVisit(p->rchild, Visit);
@@ -72,8 +72,8 @@ private:
     }
 
 public:
-    BinaryTree() :root(nullptr) {}
-    BinaryTree(Etype in[], Etype pre[], int n, string mode) {
+    Tree() :root(nullptr) {}
+    Tree(Etype in[], Etype pre[], int n, string mode) {
         if (mode == "pre")
             root = init_with_in_pre(in, 0, n-1, pre, 0, n-1);
         else if (mode == "post")
@@ -82,21 +82,23 @@ public:
             throw Error(404, string("Unrecognized mode: ")+mode);
     }
 
-    virtual ~BinaryTree() {
+    virtual ~Tree() {
         Destroy(root);
     }
 
-    virtual InOrderShow(void Visit(const Etype& e)) const {
+    virtual void InOrderShow(void Visit(const Etype& e)) const {
         InOrderVisit(root, Visit);
     }
 
-    void PreOrderShow(void Visit(const Etype& e)) const {
+    virtual void PreOrderShow(void Visit(const Etype& e)) const {
         PreOrderVisit(root, Visit);
     }
 
-    void PostOrderShow(void Visit(const Etype& e)) const {
+    virtual void PostOrderShow(void Visit(const Etype& e)) const {
         PostOrderVisit(root, Visit);
     }
+
+    virtual bool Insert(TreeNode<Etype> *&p, const Etype& e) = 0;
 };
 
 #endif

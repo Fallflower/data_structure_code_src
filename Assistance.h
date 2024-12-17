@@ -63,14 +63,16 @@ class Error : public std::exception
 private:
 	unsigned int m_code;
 	string m_what;
+	string full_mes;
 public:
-	Error(unsigned int code,  const string &what_arg): m_code(code), m_what(what_arg){}
+	Error(unsigned int code,  const string &what_arg): m_code(code), m_what(what_arg){
+		full_mes =  "Error code: " + to_string(m_code) + "\nError message: " + m_what;
+	}
 	virtual const char * what(void) const noexcept override
 	{
-		string text = "Error code: " + to_string(m_code) + "\nError message: " + m_what;
-		char* mesg = new char[text.length()+1];
-		strcpy(mesg, text.c_str());
-		return mesg;
+		// char* mesg = new char[text.length()+1];
+		// strcpy(mesg, text.c_str());
+		return full_mes.c_str();
 	}
 };
 

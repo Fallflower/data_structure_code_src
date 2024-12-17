@@ -1,10 +1,17 @@
+#ifndef __DLINKLIST__
+#define __DLINKLIST__
 #include<iostream>
 using namespace std;
+
 
 template<class Elemtype>
 struct DNode{
     Elemtype data;
     DNode *prior, *next;
+
+    DNode() {}
+    DNode(const Elemtype& e) : data(e), prior(nullptr), next(nullptr) {}
+    DNode(const Elemtype& e, DNode<Elemtype> *p, DNode<Elemtype> *n) : data(e), prior(p), next(n) {}
 };
 
 template<class Elemtype>
@@ -15,10 +22,10 @@ private:
 
     // 结点p后面插入结点s
     bool InsertNextNode(DNode<Elemtype> *p, DNode<Elemtype> *s) {
-        if (p == NULL || s == NULL)
+        if (p == nullptr || s == nullptr)
             return false;
         s->next = p->next;
-        if (p->next != NULL)
+        if (p->next != nullptr)
             p->next->prior = s;
         p->next = s;
         s->prior = p;
@@ -27,13 +34,13 @@ private:
     }
     // 删除结点p后面的结点，如果成功返回被删结点指针
     DNode<Elemtype>* DeleteNextNode(DNode<Elemtype> *p) {
-        if (p == NULL)
-            return NULL;
+        if (p == nullptr)
+            return nullptr;
         DNode<Elemtype> * q = p->next;
-        if (q != NULL)
+        if (q != nullptr)
         {
             p->next = q->next;
-            if (q->next != NULL)
+            if (q->next != nullptr)
                 q->next->prior = p;
             length--;
         }
@@ -43,28 +50,26 @@ private:
 public:
 
     DLinkList() {
-        head = NULL;
+        head = nullptr;
         length = 0;
     }
     ~DLinkList() {
         DNode<Elemtype> *p = head;
-        for (; p != NULL; p=p->next)
-        {
-            p = p->next;
-            delete (p->prior);
-        }
+        for (; p != nullptr; p=p->next)
+            if (p->prior!=nullptr) delete (p->prior);
     }
 
     int getLength() const{
         return length;
     }
 
+    //将元素插入到第loc个位置（原来的元素顺势后移）
     bool Insert(const Elemtype& e, const int& loc) {
         if (loc < 1 || loc > length + 1)
             return false;
-        if (head == NULL)
+        if (head == nullptr)
         {
-            head = new DNode<Elemtype>{e, NULL, NULL};
+            head = new DNode<Elemtype>{e, nullptr, nullptr};
             length = 1;
             return true;
         }
@@ -75,11 +80,114 @@ public:
             p = p->next;
             i++;
         }
-        if (p == NULL)
-            return false;
-        s = new DNode<Elemtype>;
-        s->data = e;
+        s = new DNode<Elemtype>(e);
         return InsertNextNode(p, s);
     }
 
+    bool Insert(const Elemtype arr[], const int& n, const int& loc) {
+        if (loc < 1 || loc > length + 1 || n < 1)
+            return false;
+        int flag = 0;
+        if (head == nullptr)
+        {
+            head = new DNode<Elemtype>{arr[0], nullptr, nullptr};
+            flag = 1;
+        }
+        DNode<Elemtype> *p = head;
+        for (int i = 1; i < loc - 1; i++)
+            p = p->next;
+        for (int i = flag; i <= n && InsertNextNode(p, new DNode<Elemtype>(arr[i])); i++, p=p->next);
+        return 1;
+    }
+
+    bool DeleteFirstElem(const Elemtype& e) {
+        if (head == nullptr) return 0;
+        if (head->data == e) {
+            DNode<Elemtype> *p = head;
+            head = head->next;
+            head->prior = nullptr;
+            delete p;
+            length--;
+            return 1;
+        }
+        int flag = 0;
+        for (DNode<Elemtype>* p = head; p!= nullptr; )
+        {
+            if (p->next != nullptr)
+            {
+                if (p->next->data == e) {
+                    DNode<Elemtype>* s = DeleteNextNode(p);
+                    if (s != nullptr) {flag = 1; delete s; break;}
+                } else
+                    p=p->next;
+            } else break;
+        }
+        return flag;
+
+    }
+
+    bool DeleteAllElem(const Elemtype& e) {
+        if (head == nullptr) return 0;
+        int flag = 0;
+        for (DNode<Elemtype>* p = head; p!= nullptr; )
+        {
+            if (p->next != nullptr)
+            {
+                if (p->next->data == e) {
+                    DNode<Elemtype>* s = DeleteNextNode(p);
+                    if (s != nullptr) {flag = 1; delete s;}
+                } else
+                    p=p->next;
+            } else break;
+        }
+        if (head->data == e) {
+            DNode<Elemtype> *p = head;
+            head = head->next;
+            head->prior = nullptr;
+            delete p;
+            length--;
+            flag = 1;
+        }
+        return flag;
+    }
+
+    bool DeleteByLoc(const int& loc) {
+        if (loc < 1 || loc > length || head == nullptr)
+            return 0;
+        int i = 1;
+        DNode<Elemtype> *p = head, *s;
+        while (i < loc - 1)
+        {
+            p = p->next;
+            i++;
+        }
+        if (p == nullptr)
+            return 0;
+        s = DeleteNextNode(p);
+        if (s == nullptr)
+            return 0;
+        delete s;
+        return 1;
+    }
+
+    ostream& output(ostream& out) const {
+        DNode<Elemtype> *p = head;
+        out << "List: [ ";
+        for (int i = 0; i < length && p!=nullptr; i++)
+        {
+           out << p->data;
+           p = p->next;
+           if (i + 1 < length && p!=nullptr) out << ", ";
+        }
+        out << " ]";
+        return out;
+    }
 };
+
+template<class Etype>
+ostream& operator<<(ostream& out, const DLinkList<Etype> &l) {
+    l.output(out);
+    return out;
+}
+
+#endif
