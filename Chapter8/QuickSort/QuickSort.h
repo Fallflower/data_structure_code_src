@@ -12,7 +12,7 @@ private:
         E pivot = arr[low];
         while (low < high)
         {
-            while (low < high && arr[high]>= pivot)
+            while (low < high && arr[high]>= pivot) // 每次一定先动high指针
                 high--;
             arr[low] = arr[high];
             while (low < high && arr[low] <= pivot)
