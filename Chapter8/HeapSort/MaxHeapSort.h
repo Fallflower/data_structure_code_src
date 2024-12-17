@@ -14,7 +14,7 @@ void HeapAdjust(E A[], int k, int n) {
     A[k] = A[0];
 }
 template <class E>
-void BuildMaxHeap(E a[], int n) { // <= 4n次关键词比较
+void BuildMaxHeap(E a[], int n) { // <= 4n次关键词比较 O(n)
     for (int i = n/2 ; i > 0; i--) 
         HeapAdjust(a, i, n);
 }
@@ -22,7 +22,7 @@ void BuildMaxHeap(E a[], int n) { // <= 4n次关键词比较
 
 
 template <class E>
-void HeapSort(E a[], int n) {
+void HeapSort(E a[], int n) { // O(nlogn)
     BuildMaxHeap(a, n);
     for (int i = n; i > 1; i--) {
         Swap(a[1], a[i]);

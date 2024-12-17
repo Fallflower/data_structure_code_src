@@ -1,4 +1,5 @@
-#include "HeapSort.h"
+#include "MinHeapSort.h"
+// #include "MaxHeapSort.h"
 
 int main()
 {
